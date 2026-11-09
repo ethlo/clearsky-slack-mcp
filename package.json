@@ -1,0 +1,23 @@
+{
+  "name": "clearsky-slack-mcp",
+  "version": "1.0.0",
+  "description": "Clearsky plugin: Slack through Slack's MCP server, read only",
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  },
+  "files": [
+    "clearsky-plugin.json",
+    "source.mjs",
+    "lib",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "clearsky-plugin"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "license": "MIT"
+}

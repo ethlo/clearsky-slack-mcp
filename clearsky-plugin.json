@@ -1,0 +1,77 @@
+{
+  "name": "slack-mcp",
+  "label": "Slack (MCP)",
+  "version": "1.0.0",
+  "description": "Slack through Slack's MCP server, read only: messages that mention you, and `door slack …` for Copilot chats. You log in from Settings; no token to paste.",
+  "clearsky": 1,
+  "entry": "source.mjs",
+  "area": "work",
+  "panel": {
+    "title": "Slack",
+    "zone": "needs",
+    "page": false
+  },
+  "settings": {
+    "SLACK_MCP_CLIENT_ID": {
+      "label": "Slack app client ID",
+      "hint": "From the Slack app your workspace uses for MCP (Basic Information → App Credentials).<span class=\"more\">Slack's MCP server only takes registered apps, so ask your Slack admins for the client ID if you don't have an app of your own. The app needs the redirect URL below under OAuth &amp; Permissions, and PKCE turned on (or set the client secret).</span>",
+      "secret": false,
+      "pattern": "^\\s*[0-9]+\\.[0-9]+\\s*$",
+      "patternHint": "a Slack client ID looks like 1234567890.1234567890"
+    },
+    "SLACK_MCP_CLIENT_SECRET": {
+      "label": "Client secret (optional)",
+      "hint": "Only for an app without PKCE.",
+      "secret": true
+    },
+    "SLACK_MCP_REDIRECT_URI": {
+      "label": "Redirect URL",
+      "hint": "Must match the app's. http://localhost:19876/callback if empty.",
+      "secret": false,
+      "pattern": "^http://(localhost|127\\.0\\.0\\.1):[0-9]{2,5}(/\\S*)?$",
+      "patternHint": "write it as http://localhost:<port>/<path>"
+    },
+    "SLACK_MCP_SCOPES": {
+      "label": "Scopes",
+      "hint": "Read-only scopes if empty.<span class=\"more\">Space-separated user scopes asked for at login. The default reads channels, DMs, group DMs, search, files, canvases, lists, reactions, emoji and users; it has no chat:write, and the door refuses tools that write either way.</span>",
+      "secret": false
+    },
+    "SLACK_MCP_URL": {
+      "label": "MCP server",
+      "hint": "https://mcp.slack.com/mcp if empty.",
+      "secret": false,
+      "pattern": "^https?://\\S+$",
+      "patternHint": "an https:// address"
+    },
+    "SLACK_MCP_QUERY": {
+      "label": "Mentions search",
+      "hint": "Slack search for the rows under Needs you. <@{me}> after:{after} if empty.<span class=\"more\">{me} is your Slack user and {after} the day the window starts (CLEARSKY_MENTION_DAYS). Add to it with Slack's search syntax, or point it at something else entirely.</span>",
+      "secret": false
+    }
+  },
+  "enabledWhen": [
+    "SLACK_MCP_CLIENT_ID"
+  ],
+  "hosts": [
+    "mcp.slack.com",
+    "slack.com"
+  ],
+  "clis": [],
+  "secrets": [
+    {
+      "kind": "token",
+      "note": "your Slack user token from the browser login (and its refresh token), in ~/.config/clearsky/slack-mcp-token.json, readable by you only"
+    }
+  ],
+  "files": [
+    "~/.config/clearsky/slack-mcp-token.json"
+  ],
+  "doors": [
+    {
+      "name": "slack",
+      "about": "reads Slack as you through Slack's MCP server (search, channels, threads, people, canvases, files); tools that send or change anything are refused"
+    }
+  ],
+  "note": "Reads only. The login opens Slack in your browser and comes back to a callback on localhost; every chat call is in Copilot's changes.",
+  "outside": "It logs in in your browser with a callback on localhost and holds the Slack login for chats, which is what a door is for."
+}
