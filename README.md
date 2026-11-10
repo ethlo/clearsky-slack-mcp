@@ -18,11 +18,11 @@ Slack's MCP server only takes registered Slack apps, so you need the client ID o
 
 Then `clearsky add slack-mcp` (or Add under Settings → Plugins), fill in **Slack app client ID**, and Log in.
 
-The client ID is your workspace's: it lives in your settings file only, never in a repo.
+The client ID is your workspace's, not a secret: it lives in your settings file, never in Clearsky's repo. A team pack can set it for everyone (`SLACK_MCP_CLIENT_ID`, and the redirect URL, scopes, server and mentions search), so colleagues only press Log in.
 
-## Next to the Slack plugin
+## The old Slack plugin
 
-The `slack` plugin does mentions with a user token you paste. This one needs no token and also gives chats Slack to read. Use one of them for mentions, or you'll see each twice.
+This replaces the token-based `slack` plugin, which is retired. If you have that one, add this one and remove it (`clearsky remove slack`), or you'll see each mention twice. `clearsky add slack` now adds this one.
 
 ## Develop
 
